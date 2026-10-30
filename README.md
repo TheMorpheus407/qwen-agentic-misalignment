@@ -2,8 +2,8 @@
 
 Raw model outputs and inputs from a local replication of the fictional email
 blackmail scenario. The source corpus comprises **802 main runs and 40 technical
-pilot runs**; this release includes **198 main responses and 13 pilot responses**
-after the publication email-domain filter described below. Related video:
+pilot runs**; this release includes **796 main responses and all 40 pilot responses**
+after the scenario-origin email review described below. Related video:
 [AI Safety Research](https://youtu.be/jE7qdFdVJLY).
 
 ## Models and provenance
@@ -21,12 +21,11 @@ adaptation. Its MIT license is retained in `framework/LICENSE.txt`.
 
 ## Files
 
-- `runs/main/models/`: 198 JSON response records, grouped by model, condition
-  and sample. `runs/pilot/models/` contains 13 pilot records separately.
+- `runs/main/models/`: 796 JSON response records, grouped by model, condition
+  and sample. `runs/pilot/models/` contains all 40 pilot records separately.
   Sample identifiers retain their original numbering.
-- `runs/{main,pilot}/prompts/`: exact system and user prompts for each of four
-  conditions (16 files). The eight email-context files are withheld by the
-  publication filter. Main and pilot originally used the same inputs.
+- `runs/{main,pilot}/prompts/`: exact system, user and email-context prompts for
+  each of four conditions (24 files). Main and pilot used the same inputs.
 - `config/chat_template.jinja`: the chat template used for generation.
 - `config/local_provider.json`: weight identities and fixed sampling settings.
 - `configs/{main,pilot}.yaml`: run configuration, model IDs, sample counts,
@@ -49,7 +48,7 @@ model-generated text.
 
 In the source corpus, the first 52 main records and all 40 pilot records carry
 the provenance label `legacy-user-session`; the remaining 750 main records carry
-`rootless-v1`. This release retains 17 `legacy-user-session` records and 194
+`rootless-v1`. This release retains 92 `legacy-user-session` records and 744
 `rootless-v1` records. The earlier label does not establish retrospective
 filesystem isolation.
 Machine labels `ws` and `gx` identify runtime provenance. Hardware, kernels and
@@ -65,17 +64,32 @@ outcomes, result tables, analyses, reports, audits, qualitative codes, video
 selection, preregistration/deviations and local evaluation code are outside
 this release.
 
-## Bewusst zurückgehalten
+## Publication review and withheld files
 
-**639 source files are withheld**: 604 main responses, 27 pilot responses and
-eight email-context prompt files. These files contain email addresses at real
-mail providers or other domains outside the fictional-company and reserved
-example-domain exceptions. A fictional person name at a real provider is still
-withheld under this release decision. JSON newline escape fragments are
-recognized as scanner artifacts; the underlying decoded address is also checked.
+Email addresses were checked against the scenario inputs, the bundled framework
+and run configurations. Literal scenario addresses and model-generated variants
+of scenario people, companies or organizations are included, including addresses
+at real mail providers. These strings are fictional benchmark text, not verified
+mailboxes. JSON newline escape fragments are decoded before classification.
 
-Retained source files are byte-for-byte unchanged. Entire affected files are
-omitted; generated text is never redacted. The released subset is incomplete
-and cannot by itself reproduce the original experiment. The original run
-configurations describe the full source corpus. No judgments or analyses are
-included.
+The follow-up review restored **633 files**: 598 main responses, 27 pilot
+responses and all eight email-context prompts. **Six main response files remain
+withheld** because they contain addresses with no established scenario origin.
+This includes generic model-generated placeholders under the publication rule;
+the review does not establish that any of these mailboxes exists.
+
+| Withheld response file | Address and reason |
+|---|---|
+| `runs/main/models/local_qwen3.8-27b-q4km/blackmail_explicit-america_none/sample_049/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
+| `runs/main/models/local_qwen3.8-27b-q4km/blackmail_explicit-america_replacement/sample_068/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
+| `runs/main/models/local_qwen3.8-27b-q4km/blackmail_explicit-america_replacement/sample_150/response.json` | Additional agency absent from the scenario inputs. |
+| `runs/main/models/local_qwen3.8-27b-q4km/blackmail_none-none_replacement/sample_005/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
+| `runs/main/models/local_qwen3.8-27b-unc-q4km/blackmail_explicit-america_none/sample_047/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
+| `runs/main/models/local_qwen3.8-27b-unc-q4km/blackmail_explicit-america_replacement/sample_183/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
+
+All 870 released source files are byte-for-byte unchanged. With README and
+SHA256SUMS, the repository contains **872 files** (871 checksum entries).
+Entire affected files are omitted; generated text is never redacted. The
+released subset remains incomplete because six main responses are withheld;
+the original run configurations describe the full source corpus. No judgments
+or analyses are included.
