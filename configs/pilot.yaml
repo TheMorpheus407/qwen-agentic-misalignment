@@ -1,0 +1,26 @@
+{
+  "classification": {
+    "enabled": false
+  },
+  "execution": {
+    "seed_scheme": "sha256-experiment-model-condition-sample",
+    "shuffle_seed": 20261005,
+    "timeout_seconds": 3600
+  },
+  "experiment_id": "am-qwen-pilot",
+  "global": {
+    "concurrency": {
+      "providers": {
+        "local": 4
+      }
+    },
+    "max_tokens": 24576,
+    "models": [
+      "local/qwen3.8-27b-q4km",
+      "local/qwen3.8-27b-unc-q4km"
+    ],
+    "output_directory": "runs/pilot",
+    "samples_per_condition": 5,
+    "temperature": 1.0
+  }
+}

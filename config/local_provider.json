@@ -1,0 +1,27 @@
+{
+  "chat_template_sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041",
+  "models": {
+    "local/qwen3.8-27b-q4km": {
+      "arm": "q4-k-m",
+      "gguf": "Qwen3.8-27B-Q4_K_M.gguf",
+      "label": "base",
+      "sha256": "e103abf9d914d1d7b2f2592f055f2759a71195c350a01c135f71aaae86bca52b"
+    },
+    "local/qwen3.8-27b-unc-q4km": {
+      "arm": "unc-q4-k-m",
+      "gguf": "orcarouter_Qwen3.8-27B-Uncensored-Q4_K_M.gguf",
+      "label": "unc",
+      "sha256": "6c8c7658fe13eef22666aa89862f7fb70aa72109838cf19989e59b15875e5e08"
+    }
+  },
+  "sampling": {
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "repeat_penalty": 1.0,
+    "temperature": 1.0,
+    "top_k": 20,
+    "top_p": 0.95
+  },
+  "server_alias": "qwen3.8-27b",
+  "total_slots": 4
+}
