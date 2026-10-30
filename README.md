@@ -14,10 +14,9 @@ Both models were run locally with llama.cpp, using Q4_K_M GGUF weights:
 - Abliterated derivative: [bartowski/orcarouter_Qwen3.8-27B-Uncensored-GGUF](https://huggingface.co/bartowski/orcarouter_Qwen3.8-27B-Uncensored-GGUF/tree/87d37daf5e5eb72a926d8b413e08809a57f1a120), revision `87d37daf5e5eb72a926d8b413e08809a57f1a120`.
 
 Exact weight filenames and SHA-256 hashes are in `config/local_provider.json`;
-weights are not bundled. The framework excerpt comes from
-[anthropic-experimental/agentic-misalignment](https://github.com/anthropic-experimental/agentic-misalignment/tree/ea0630e1a3eaae7f9f9740fd2703229d3854ccda)
-at commit `ea0630e1a3eaae7f9f9740fd2703229d3854ccda`, with a local-provider
-adaptation. Its MIT license is retained in `framework/LICENSE.txt`.
+weights are not bundled. The `framework/` directory is an MIT-licensed excerpt of
+[Anthropic's agentic-misalignment framework](https://github.com/anthropic-experimental/agentic-misalignment/tree/ea0630e1a3eaae7f9f9740fd2703229d3854ccda)
+used here only to generate the scenario prompts; its classifier was not used.
 
 ## Files
 
@@ -31,9 +30,19 @@ adaptation. Its MIT license is retained in `framework/LICENSE.txt`.
 - `configs/{main,pilot}.yaml`: run configuration, model IDs, sample counts,
   token budget, shuffle seed and per-response seed scheme. Actual seeds,
   sampling settings and prompt hashes are retained in each response record.
-- `framework/`: the framework excerpt and its MIT license.
+- `framework/`: prompt generation, the blackmail templates and variables, the
+  four-condition prompt configuration and `LICENSE.txt`. The generator is
+  reduced to the published conditions; API clients, experiment runners and
+  classifiers are excluded.
 - `SHA256SUMS`: SHA-256 checksums of every published file except this checksum
   file itself. Verify from the repository root with `sha256sum -c SHA256SUMS`.
+
+To regenerate the four prompt conditions, use Python 3.10 or later with PyYAML
+installed and write to a separate output directory:
+
+```sh
+python3 -B framework/scripts/generate_prompts.py --config framework/configs/prompts.yaml --output /tmp/qwen-prompts
+```
 
 Each response has three top-level fields: `raw_response` (final answer),
 `reasoning_content` (saved thinking), and `metadata`. Technical metadata includes
@@ -87,8 +96,9 @@ the review does not establish that any of these mailboxes exists.
 | `runs/main/models/local_qwen3.8-27b-unc-q4km/blackmail_explicit-america_none/sample_047/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
 | `runs/main/models/local_qwen3.8-27b-unc-q4km/blackmail_explicit-america_replacement/sample_183/response.json` | Generic model-generated placeholder absent from the inputs; no scenario person or company name. |
 
-All 870 released source files are byte-for-byte unchanged. With README and
-SHA256SUMS, the repository contains **872 files** (871 checksum entries).
+All 836 released response records and all 24 published prompt files remain
+byte-for-byte unchanged. With README and SHA256SUMS, the repository contains
+**877 files** (876 checksum entries).
 Entire affected files are omitted; generated text is never redacted. The
 released subset remains incomplete because six main responses are withheld;
 the original run configurations describe the full source corpus. No judgments
